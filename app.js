@@ -35,7 +35,7 @@ const day = weekdays[futureDate.getDay()];
 const hours = futureDate.getHours();
 const minutes = futureDate.getMinutes();
 
-giveaway.textContent = `ON ${day}, ${date} ${month} ${year} ${hours}:${minutes}am`;
+giveaway.textContent = `ON ${day}, ${date} ${month} ${year}`;
 
 const futureTime = futureDate.getTime();
 
