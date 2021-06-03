@@ -1,75 +1,75 @@
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 const weekdays = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
 ];
 
-const giveaway = document.querySelector(".giveaway");
-const deadline = document.querySelector(".deadline");
-const items = document.querySelectorAll(".deadline-format h4");
+const text = document.querySelector('.gift-info h4');
+const values = document.querySelectorAll('.deadline-format h4');
+const deadline = document.querySelector('.deadline');
+const textMessage = document.querySelector('.expired');
 
-let futureDate = new Date(2022, 4, 30, 0, 0, 0);
+let dateOfBith = new Date(2021, 5, 3, 13, 14, 0);
 
-const year = futureDate.getFullYear();
-const month = months[futureDate.getMonth()];
-const date = futureDate.getDate();
-const day = weekdays[futureDate.getDay()];
-const hours = futureDate.getHours();
-const minutes = futureDate.getMinutes();
+let year = dateOfBith.getFullYear();
+let day = weekdays[dateOfBith.getDay()];
 
-giveaway.textContent = `ON ${day}, ${date} ${month} ${year}`;
+const oneSecond = 1000;
+const oneMinute = 60 * 1000;
+const oneHour = 60 * 60 * 1000;
+const oneDay = 24 * 60 * 60 * 1000;
 
-const futureTime = futureDate.getTime();
+text.innerHTML = `<h4 class="giveaway">${day}, 30th May ${year}</h4>`;
 
-function getRemainingTime() {
+function setTime() {
   const today = new Date().getTime();
-  const t = futureTime - today;
-  const oneDay = 24 * 60 * 60 * 1000;
-  const oneHour = 60 * 60 * 1000;
-  const oneMinute = 60 * 1000;
+  let timeRemaining = dateOfBith.getTime() - today;
 
-  let days = Math.floor(t / oneDay);
-  let hours = Math.floor((t % oneDay) / oneHour);
-  let minutes = Math.floor((t % oneHour) / oneMinute);
-  let seconds = Math.floor((t % oneMinute) / 1000);
+  let daysLeft = Math.floor(timeRemaining / oneDay);
+  let hoursLeft = Math.floor((timeRemaining % oneDay) / oneHour);
+  let minutesLeft = Math.floor((timeRemaining % oneHour) / oneMinute);
+  let secondsleft = Math.floor((timeRemaining % oneMinute) / oneSecond);
 
-  const values = [days, hours, minutes, seconds];
+  let display = [daysLeft, hoursLeft, minutesLeft, secondsleft];
 
-  function format(item) {
-    if (item < 10) {
-      return (item = `0${item}`);
-    }
-    return item;
+  function format(value) {
+    if (value < 10) return `0${value}`;
+    return value;
   }
 
-  items.forEach(function (item, index) {
-    item.innerHTML = format(values[index]);
+  values.forEach(function (value, index) {
+    value.textContent = format(display[index]);
   });
-  if (t < 0) {
-    clearInterval(countDown);
-    deadline.innerHTML = `<h4 class="expired">Thank you for wishing me! wish you all have a great day</h4>`;
+
+  if (timeRemaining < 0) {
+    deadline.classList.add('hidden');
+    textMessage.classList.remove('hidden');
+    dateOfBith.setFullYear(parseInt(dateOfBith.getFullYear()) + 1);
+    setTimeout(function () {
+      deadline.classList.remove('hidden');
+      textMessage.classList.add('hidden');
+      console.log(dateOfBith);
+    }, oneDay);
   }
 }
 
-//countdown
-let countDown = setInterval(getRemainingTime, 1000);
-
-getRemainingTime();
+setInterval(setTime, 1000);
+setTime();
