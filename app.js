@@ -67,7 +67,7 @@ function setTime() {
       deadline.classList.remove('hidden');
       textMessage.classList.add('hidden');
       console.log(dateOfBith);
-    }, 5000);
+    }, 0);
   }
 }
 
