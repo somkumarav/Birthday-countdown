@@ -27,7 +27,7 @@ const values = document.querySelectorAll('.deadline-format h4');
 const deadline = document.querySelector('.deadline');
 const textMessage = document.querySelector('.expired');
 
-let dateOfBith = new Date(2021, 5, 30, 0, 0, 0);
+let dateOfBith = new Date(2022, 5, 30, 0, 0, 0);
 
 let year = dateOfBith.getFullYear();
 let day = weekdays[dateOfBith.getDay()];
